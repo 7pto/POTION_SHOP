@@ -4,7 +4,7 @@ pragma solidity ^0.8.4;
 import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 
-contract SIMMY is ERC721Enumerable, Ownable {  
+contract potion_shop is ERC721Enumerable, Ownable {  
     using Address for address;
     using Strings for uint256;
     
@@ -21,6 +21,8 @@ contract SIMMY is ERC721Enumerable, Ownable {
 
     // The base link that leads to the image / video of the token
     string public baseTokenURI;
+
+    string public baseExtension = ".json";
 
     // Team addresses for withdrawals
     address public a1;
@@ -122,7 +124,7 @@ contract SIMMY is ERC721Enumerable, Ownable {
     }
 
     // Set team addresses
-    function setAddresses(address _a) public onlyOwner {
+    function setAddress(address _a) public onlyOwner {
         a1 = _a;
 
     }
