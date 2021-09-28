@@ -1,4 +1,20 @@
 {
+  "name": "potion-shop",
+  "version": "0.0.1",
+  "description": "The Potion Shop contracts",
+  "main": "index.js",
+  "scripts": {
+    "ganache": "ganache-cli -h 0.0.0.0 -m=\"traffic drama brush coconut enable diesel glue input spell utility regret light\"",
+    "migrate": "rm -rf build && truffle migrate --reset --compile-all --network development",
+    "test": "truffle compile --all && npm run migrate && truffle test --network development"
+  },
+  "keywords": [
+      "NFT",
+      "Blockchain",
+      "Ethereum"
+  ],
+  "author": "aa-deet-eeya",
+  "license": "MIT",
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.2"
   }

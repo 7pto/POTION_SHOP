@@ -4,7 +4,7 @@ pragma solidity ^0.8.4;
 import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 
-contract potion_shop is ERC721Enumerable, Ownable {  
+contract PotionShop is ERC721Enumerable, Ownable {  
     using Address for address;
     using Strings for uint256;
     
@@ -17,7 +17,7 @@ contract potion_shop is ERC721Enumerable, Ownable {
     uint256 public price = 0.04 ether; // 1.yet to decide
 
     // Maximum limit of tokens that can ever exist
-    uint256 constant MAX_SUPPLY = 10000; //2. needs correct number
+    uint256 constant MAX_SUPPLY = 5; //2. needs correct number
 
     // The base link that leads to the image / video of the token
     string public baseTokenURI;
@@ -78,30 +78,24 @@ contract potion_shop is ERC721Enumerable, Ownable {
 
     
     // Edit reserved presale spots
-    function editPresaleReserved(address[] memory _a, uint256[] memory _amount) public onlyOwner {
+    function editPresaleReserved(address[] memory _a) public onlyOwner {
         for(uint256 i; i < _a.length; i++){
-            presaleReserved[_a[i]] = _amount[i];
+            presaleReserved[_a[i]] = 2; /// Only 2 reserved per account
         }
     }
     
     // override to ensure correct tokenURI
-    function tokenURI(uint256 tokenId)
-    public
-    view
-    virtual
-    override
-    returns (string memory)
-  {
-    require(
-      _exists(tokenId),
-      "ERC721Metadata: URI query for nonexistent token"
-    );
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        require(
+        _exists(tokenId),
+        "ERC721Metadata: URI query for nonexistent token"
+        );
 
-    string memory currentBaseURI = _baseURI();
-    return bytes(currentBaseURI).length > 0
-        ? string(abi.encodePacked(currentBaseURI, tokenId.toString(), baseExtension))
-        : "";
-  }
+        string memory currentBaseURI = _baseURI();
+        return bytes(currentBaseURI).length > 0
+            ? string(abi.encodePacked(currentBaseURI, tokenId.toString(), baseExtension))
+            : "";
+    }
 
     // Start and stop presale
     function setPresaleActive(bool val) public onlyOwner {
@@ -126,13 +120,11 @@ contract potion_shop is ERC721Enumerable, Ownable {
     // Set team addresses
     function setAddress(address _a) public onlyOwner {
         a1 = _a;
-
     }
 
     // Withdraw funds from contract for the team
     function withdraw() public payable onlyOwner {
         (bool success, ) = payable(a1).call{value: address(this).balance}("");
         require(success);
-
     }
 }
