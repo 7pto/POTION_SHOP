@@ -117,7 +117,7 @@ contract PotionShop is ERC721Enumerable, Ownable {
         price = newPrice;
     }
 
-    // Set team addresses
+    // Set team address
     function setAddress(address _a) public onlyOwner {
         a1 = _a;
     }
